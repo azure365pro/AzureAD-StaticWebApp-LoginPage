@@ -1,0 +1,38 @@
+{
+    "routes": [
+        {
+            "route": "/authenticated/*",
+            "allowedRoles": [ "authenticated" ]
+        },
+        {
+            "route": "/login",
+            "redirect": "/.auth/login/aad?post_login_redirect_uri=https://virtualpetal.com/authenticated/"
+        },
+        {
+            "route": "/logout",
+            "redirect": "/.auth/logout"
+        }
+
+    ],
+    "responseOverrides": {
+        "401": {
+          "statusCode": 302,
+          "redirect": "/"
+        }
+    },
+    "auth": {
+        "identityProviders": {
+            "azureActiveDirectory": {
+                "userDetailsClaim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+                "registration": {
+                    "openIdIssuer": "https://login.microsoftonline.com/36001789-d8f8-4340-9ff8-0aba265a7715",
+                    "clientIdSettingName": "AZURE_CLIENT_ID",
+                    "clientSecretSettingName": "AZURE_CLIENT_SECRET"
+                }
+            }
+        }
+    },
+    "globalHeaders": {
+        "Cache-Control": "no-cache"
+    }
+}
